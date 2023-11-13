@@ -4,17 +4,15 @@ const countryList = document.getElementById("countryList");
 
 function fetchCountries() {
   fetch("https://restcountries.com/v3.1/all")
-    .then((response) => response.json())
+    .then((res) => res.json())
     .then((data) => {
       displayCountries(data);
     })
-    .catch((error) => {
-      console.error("Error fetching countries:", error);
-    });
+
 }
 
 function displayCountries(countries) {
-  countryList.innerHTML = ""; // Очистить предыдущие результаты
+  countryList.innerHTML = "";
 
   const searchTerm = searchInput.value.toLowerCase();
 
@@ -27,11 +25,15 @@ function displayCountries(countries) {
       countryBlock.innerHTML = `
         <h1>${country.flag}</h1>
         <h2>${country.name.common}</h2>
-        <a href="${country.maps.googleMaps}" target="_blank">
+        <h3>${country.altSpellings[0]}</h3>
+        <h4>${country.capital}</h4>
+        <h4>${country.timezones[0]}</h4>
+        <a href="${country.maps.openStreetMaps}" target="_blank">
           <ion-icon name="navigate-outline"></ion-icon>
         </a>
       `;
       countryList.appendChild(countryBlock);
+      console.log(country);
     }
   });
 }
